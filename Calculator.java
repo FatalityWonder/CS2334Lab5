@@ -133,6 +133,12 @@ public class Calculator
         // Condition on the number of tokens (number of strings in user input separated by spaces)
         switch(tokens.length)
         {	
+        	case 1: if(tokens[0].equalsIgnoreCase("Quit"))
+        		{
+        			calculated = Integer.MIN_VALUE;
+        		}
+        		break;
+        		
         	case 2: calculated = calculateTwoTokens(tokens);
         		break;
         	
@@ -175,14 +181,30 @@ public class Calculator
     public static String parseAndExecute(String input)
     {
         String[] tokens = input.split("\\s");
-        try {
-			int calc = execute(tokens);
-		} catch (NumberFormatException | CalculatorException e) {
-			// TODO Auto-generated catch block
+        
+        int calc = 0;
+        
+        try 
+        {
+			calc = execute(tokens);
+		} 
+        catch (NumberFormatException e) 
+        {
+			return "Input number cannot be parsed to an int. Please try again.";
 			e.printStackTrace();
-		}
+		} 
+        catch (CalculatorException e)
+        {
+        	return String.format("%s", "");
+        	e.printStackTrace();
+        }
+        catch (ArithmeticException e)
+        {
+        	return "Attempted to divide by 0. Please try again";
+        	e.printStackTrace();
+        }
         // Hint: you should try and call execute(). If execute encounters an error, it will throw an exception. This
         // method will catch those exceptions and respond accordingly.
-    	return "";
+    	return String.format("The result is: %d", calc);
     }
 }
