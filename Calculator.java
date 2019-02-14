@@ -44,6 +44,10 @@ public class Calculator
         {
         	a = -a;
         }
+        else
+        {
+        	throw new CalculatorException("Illegal Command");
+        }
         
         return a;
     }
@@ -89,11 +93,11 @@ public class Calculator
     	}
     	else if (tokens[1].equals("-"))
     	{
-    		result = first + second;
+    		result = first * second;
     	}
     	else if (tokens[1].equals("+"))
     	{
-    		result = first - second;
+    		result = first + second;
     	}
     	
     	return result;
@@ -207,12 +211,12 @@ public class Calculator
 		} 
         catch (CalculatorException e)
         {
-        	error = String.format("%s", e.getMessage());
+        	error = String.format("Calculator Exception, message is: %s", e.getMessage());
         	e.printStackTrace();
         }
         catch (ArithmeticException e)
         {
-        	error = "Attempted to divide by 0. Please try again";
+        	error = "Attempted to divide by 0. Please try again.";
         	e.printStackTrace();
         }
         // Hint: you should try and call execute(). If execute encounters an error, it will throw an exception. This
