@@ -137,6 +137,10 @@ public class Calculator
         		{
         			calculated = Integer.MIN_VALUE;
         		}
+        		else
+        		{
+        			throw new CalculatorException("Illegal Command");
+        		}
         		break;
         		
         	case 2: calculated = calculateTwoTokens(tokens);
@@ -144,6 +148,8 @@ public class Calculator
         	
         	case 3: calculated = calculateThreeTokens(tokens);
         		break;
+        		
+        	default: throw new CalculatorException("Illegal Token Length");
         }
         
         return calculated;
@@ -181,30 +187,36 @@ public class Calculator
     public static String parseAndExecute(String input)
     {
         String[] tokens = input.split("\\s");
-        
-        int calc = 0;
-        
+
+        String error = "";
         try 
         {
-			calc = execute(tokens);
+			int calc = execute(tokens);
+			
+			if (calc == Integer.MIN_VALUE)
+			{
+				return "quit";
+			}
+			
+			return String.format("The result is: %d", calc);
 		} 
         catch (NumberFormatException e) 
         {
-			return "Input number cannot be parsed to an int. Please try again.";
+			error = "Input number cannot be parsed to an int. Please try again.";
 			e.printStackTrace();
 		} 
         catch (CalculatorException e)
         {
-        	return String.format("%s", "");
+        	error = String.format("%s", e.getMessage());
         	e.printStackTrace();
         }
         catch (ArithmeticException e)
         {
-        	return "Attempted to divide by 0. Please try again";
+        	error = "Attempted to divide by 0. Please try again";
         	e.printStackTrace();
         }
         // Hint: you should try and call execute(). If execute encounters an error, it will throw an exception. This
         // method will catch those exceptions and respond accordingly.
-    	return String.format("The result is: %d", calc);
+    	return error;
     }
 }
