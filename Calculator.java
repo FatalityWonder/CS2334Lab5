@@ -34,9 +34,18 @@ public class Calculator
      */
     protected static int calculateTwoTokens(String[] tokens) throws NumberFormatException, CalculatorException
     {
-        int a = Integer.parseInt(tokens[1]); // Throws NumberFormatException if the second token is not an int value.
-        // TODO: complete this...
-        return 0;
+    	int a = Integer.parseInt(tokens[1]); // Throws NumberFormatException if the second token is not an int value.
+    	
+        if (tokens[0].equalsIgnoreCase("halve"))
+        {
+        	a = (a/2);
+        }
+        else if(tokens[0].equalsIgnoreCase("negate"))
+        {
+        	a = -a;
+        }
+        
+        return a;
     }
 
     /**
@@ -70,8 +79,24 @@ public class Calculator
     protected static int calculateThreeTokens(String[] tokens)
             throws ArithmeticException, NumberFormatException, CalculatorException
     {
-        // TODO: stubbed
-    	return 0;
+    	int first = Integer.parseInt(tokens[0]);
+    	int second = Integer.parseInt(tokens[2]);
+    	int result = 0;
+    	
+    	if (tokens[1].equals("/"))
+    	{
+    		result = first / second;
+    	}
+    	else if (tokens[1].equals("-"))
+    	{
+    		result = first + second;
+    	}
+    	else if (tokens[1].equals("+"))
+    	{
+    		result = first - second;
+    	}
+    	
+    	return result;
     }
 
     /**
@@ -104,13 +129,18 @@ public class Calculator
      */
     protected static int execute(String[] tokens) throws NumberFormatException, CalculatorException
     {
+    	int calculated = Integer.MIN_VALUE;
         // Condition on the number of tokens (number of strings in user input separated by spaces)
         switch(tokens.length)
-        {
-            // TODO: complete this..
+        {	
+        	case 2: calculated = calculateTwoTokens(tokens);
+        		break;
+        	
+        	case 3: calculated = calculateThreeTokens(tokens);
+        		break;
         }
         
-        return 0;
+        return calculated;
     }
 
     /**
@@ -144,7 +174,13 @@ public class Calculator
      */
     public static String parseAndExecute(String input)
     {
-        // TODO: complete this...
+        String[] tokens = input.split("\\s");
+        try {
+			int calc = execute(tokens);
+		} catch (NumberFormatException | CalculatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         // Hint: you should try and call execute(). If execute encounters an error, it will throw an exception. This
         // method will catch those exceptions and respond accordingly.
     	return "";
