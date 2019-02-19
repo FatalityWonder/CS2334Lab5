@@ -203,17 +203,17 @@ public class Calculator
 			}
 			
 			return String.format("The result is: %d", calc);
-		} 
-        catch (NumberFormatException e) 
-        {
-			error = "Input number cannot be parsed to an int. Please try again.";
-			e.printStackTrace();
-		} 
+		}
         catch (CalculatorException e)
         {
         	error = String.format("Calculator Exception, message is: %s", e.getMessage());
         	e.printStackTrace();
-        }
+        } 
+        catch (NumberFormatException e) 
+        {
+			error = "Input number cannot be parsed to an int. Please try again.";
+			e.printStackTrace();
+		}        
         catch (ArithmeticException e)
         {
         	error = "Attempted to divide by 0. Please try again.";
